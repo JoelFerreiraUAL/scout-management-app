@@ -7,6 +7,9 @@ function ItemList({ items }) {
         <tr>
           <th>Code</th>
           <th>Name</th>
+          <th>Description</th>
+          <th>Section</th>
+          <th>Sub Section</th>
         </tr>
       </thead>
       <tbody>
@@ -14,8 +17,11 @@ function ItemList({ items }) {
           items.map((item) => {
             return (
               <tr key={item.id}>
-                <td> {item.internalCode} </td>
-                <td> {item.subSection} </td>
+                <td> {item.idCode} </td>
+                <td> {item.name} </td>
+                <td> {item.description} </td>
+                <td> {item.idSubsection.section.section} </td>
+                <td> {item.idSubsection.subSection} </td>
               </tr>
             );
           })
