@@ -14,6 +14,29 @@ function NavBar() {
               Items
             </Link>
           </li>
+          <li className="nav-item">
+            <Link className="nav-link active" aria-current="page" to="/Section">
+              Secções
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link active"
+              aria-current="page"
+              to="/Categories"
+            >
+              Categorias
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link active"
+              aria-current="page"
+              to="/Inspection"
+            >
+              Inspeções
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>

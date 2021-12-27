@@ -5,11 +5,12 @@ function ItemList({ items }) {
     <table className="table">
       <thead>
         <tr>
-          <th>Code</th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Section</th>
-          <th>Sub Section</th>
+          <th>Código</th>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Seção</th>
+          <th>Sub Seção</th>
+          <th>Acões</th>
         </tr>
       </thead>
       <tbody>
@@ -22,6 +23,9 @@ function ItemList({ items }) {
                 <td> {item.description} </td>
                 <td> {item.idSubsection.section.section} </td>
                 <td> {item.idSubsection.subSection} </td>
+                <td>
+                  <span className="material-icons-outlined">more_vert</span>
+                </td>
               </tr>
             );
           })
