@@ -18,7 +18,7 @@ function ItemPage() {
 
   function importFile(e) {
     e.preventDefault();
-    let newItems = [];
+    let importedItems = [];
 
     var files = e.target.files,
       f = files[0];
@@ -47,13 +47,13 @@ function ItemPage() {
                   },
                 },
               };
-              newItems.push(item);
+              importedItems.push(item);
             }
           });
         }
       });
-      addItems(newItems).then((result) => {
-        console.log(result);
+      addItems(importedItems).then(async () => {
+        await getData();
       });
     };
     reader.readAsBinaryString(f);
