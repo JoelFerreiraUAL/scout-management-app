@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 function ItemList({ items }) {
   return (
     <table className="table">
@@ -18,7 +18,10 @@ function ItemList({ items }) {
           items.map((item) => {
             return (
               <tr key={item.id}>
-                <td> {item.idCode} </td>
+                <td>
+                  {" "}
+                  <Link to={"/item/" + item.id}> {item.idCode} </Link>{" "}
+                </td>
                 <td> {item.name} </td>
                 <td> {item.description} </td>
                 <td> {item.idSubsection.section.section} </td>
