@@ -1,14 +1,17 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { addItems, getItems } from "../services/scoutService";
+import { Link } from "react-router-dom";
 import ItemList from "./ItemList";
+import Spinner from "./Spinner";
 import * as XLSX from "xlsx";
-import { toast } from "react-toastify";
 
 function ItemPage() {
   const [items, setItems] = useState([]);
   const [_filteredItems, setFilteredItems] = useState([]);
-
+  const [pageSize, setPageSize] = useState(1);
+  const [take, setTake] = useState(10);
+  const [showSpinner, setShowSpinner] = useState(false);
   function findItem(event) {
     const name = event.target.value;
     let filteredItems = [...items];
@@ -17,7 +20,33 @@ function ItemPage() {
     );
     setFilteredItems(filteredItems);
   }
-
+  function getNext() {
+    setItems([]);
+    setFilteredItems([]);
+    let currentSize = pageSize + 1;
+    setPageSize(currentSize);
+    setShowSpinner(true);
+    getItems(currentSize, take).then((items) => {
+      setItems(items);
+      setFilteredItems(items);
+      setShowSpinner(false);
+    });
+  }
+  function getPrevious() {
+    let currentSize = pageSize - 1;
+    if (currentSize < 1) {
+      return;
+    }
+    setItems([]);
+    setFilteredItems([]);
+    setPageSize(currentSize);
+    setShowSpinner(true);
+    getItems(currentSize, take).then((items) => {
+      setItems(items);
+      setFilteredItems(items);
+      setShowSpinner(false);
+    });
+  }
   function importFile(e) {
     e.preventDefault();
     let importedItems = [];
@@ -61,12 +90,15 @@ function ItemPage() {
     reader.readAsBinaryString(f);
   }
   const getData = async () => {
-    const items = await getItems();
+    const items = await getItems(pageSize, take);
     setItems(items);
     setFilteredItems(items);
   };
   useEffect(() => {
-    getData();
+    setShowSpinner(true);
+    getData().then(() => {
+      setShowSpinner(false);
+    });
   }, []);
 
   return (
@@ -78,9 +110,9 @@ function ItemPage() {
       </div>
       <div className="row">
         <div className="col">
-          <button type="button" className="btn btn-primary">
+          <Link className="btn btn-primary" to="/item">
             Criar Item
-          </button>
+          </Link>
         </div>
       </div>
       <div className="row">
@@ -108,7 +140,12 @@ function ItemPage() {
       </div>
       <div className="row">
         <div className="col mt-3">
-          <ItemList items={_filteredItems} />
+          <ItemList
+            items={_filteredItems}
+            next={getNext}
+            previous={getPrevious}
+            showSpinner={showSpinner}
+          />
         </div>
       </div>
     </>

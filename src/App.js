@@ -14,6 +14,7 @@ function App() {
           <Route exact path="/" element={<HomePage />}></Route>
           <Route path="/items" element={<ItemPage />}></Route>
           <Route path="/item/:id" element={<CreateItem />} />
+          <Route path="/item" element={<CreateItem />} />
         </Routes>
       </div>
       <ToastContainer hideProgressBar={true} />
