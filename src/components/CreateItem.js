@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import TextField from "@mui/material/TextField";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
+import { Link } from "react-router-dom";
 import {
   getItem,
   getSubSections,
@@ -16,7 +20,7 @@ function CreateItem(props) {
     id: null,
     name: "",
     description: "",
-    purchaseseat: "",
+    purchaseat: "",
     endofllife: "",
     idCode: "",
     idCategory: {
@@ -32,14 +36,25 @@ function CreateItem(props) {
         section: "",
       },
     },
+    itemInspection: [],
   });
   const [subSections, setSubSections] = useState([]);
   const [itemCategories, setItemCategories] = useState([]);
 
   function handleChange({ target }) {
+    console.log(target);
     const updateItem = { ...item, [target.name]: target.value };
     setItem(updateItem);
   }
+  function handleEndDateChange(date) {
+    const updateItem = { ...item, endofllife: date };
+    setItem(updateItem);
+  }
+  function handlePurchasedAtChange(date) {
+    const updateItem = { ...item, purchaseat: date };
+    setItem(updateItem);
+  }
+
   function handleSubSectionDropdownChange({ target }) {
     let _subSection = subSections.find((result) => {
       return result.internalCode === Number(target.value);
@@ -132,6 +147,34 @@ function CreateItem(props) {
             </div>
           </div>
           <div className="row">
+            <div className="col-4 mb-3">
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                  label="Data Compra"
+                  name="purchaseat"
+                  id="purchaseat"
+                  value={item.purchaseat}
+                  onChange={handlePurchasedAtChange}
+                  renderInput={(params) => <TextField {...params} fullWidth />}
+                />
+              </LocalizationProvider>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-4 mb-3">
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                  label="Data Fim"
+                  name="endofllife"
+                  id="endofllife"
+                  value={item.endofllife}
+                  onChange={handleEndDateChange}
+                  renderInput={(params) => <TextField {...params} fullWidth />}
+                />
+              </LocalizationProvider>
+            </div>
+          </div>
+          <div className="row">
             <div className="col-4">
               <div className="mb-3">
                 <label htmlFor="idSubSection" className="form-label">
@@ -184,9 +227,17 @@ function CreateItem(props) {
               </div>
             </div>
           </div>
-          <button type="submit" className="btn btn-primary">
-            Submeter
-          </button>
+          <div className="row">
+            <div className="col-3">
+              <Link to="/items" className="btn btn-danger">
+                Cancelar
+              </Link>
+              <button type="submit" className="btn btn-primary ms-3">
+                Submeter
+              </button>
+            </div>
+            <div className="col-3"></div>
+          </div>
         </form>
       </div>
     </>

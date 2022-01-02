@@ -5,19 +5,32 @@ import HomePage from "./components/HomePage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CreateItem from "./components/CreateItem";
+import SectionPage from "./components/SectionPage";
+import SubSectionPage from "./components/SubSectionPage";
+import ItemInspectionPage from "./components/ItemInspectionPage";
+import CategoryPage from "./components/CategoryPage";
+import CreateSection from "./components/CreateSection";
 function App() {
   return (
     <>
       <NavBar />
-      <div className="container p-2">
+      <div className="container-fluid  pt-2">
         <Routes>
           <Route exact path="/" element={<HomePage />}></Route>
           <Route path="/items" element={<ItemPage />}></Route>
-          <Route path="/item/:id" element={<CreateItem />} />
           <Route path="/item" element={<CreateItem />} />
+          <Route path="/item/:id" element={<CreateItem />} />
+
+          <Route path="/sections" element={<SectionPage />}></Route>
+          <Route path="/section" element={<CreateSection />} />
+          <Route path="/section/:id" element={<CreateSection />} />
+
+          <Route path="/subsections" element={<SubSectionPage />}></Route>
+          <Route path="/inspection" element={<ItemInspectionPage />}></Route>
+          <Route path="/category" element={<CategoryPage />}></Route>
         </Routes>
       </div>
-      <ToastContainer hideProgressBar={true} />
+      <ToastContainer autoClose={true} hideProgressBar={true} />
     </>
   );
 }

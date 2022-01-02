@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { addItems, getItems } from "../services/scoutService";
+import { addItems, deleteItemById, getItems } from "../services/scoutService";
 import { Link } from "react-router-dom";
 import ItemList from "./ItemList";
 import Spinner from "./Spinner";
@@ -19,6 +19,16 @@ function ItemPage() {
       item.name.toLowerCase().includes(name.toLowerCase())
     );
     setFilteredItems(filteredItems);
+  }
+  function deleteItem(event) {
+    let id = event.target.value;
+    deleteItemById(id).then(() => {
+      let currentItems = items.filter((element) => {
+        return element.id !== Number(id);
+      });
+      setItems(currentItems);
+      setFilteredItems(currentItems);
+    });
   }
   function getNext() {
     setItems([]);
@@ -84,7 +94,9 @@ function ItemPage() {
         }
       });
       addItems(importedItems).then(async () => {
+        setShowSpinner(true);
         await getData();
+        setShowSpinner(false);
       });
     };
     reader.readAsBinaryString(f);
@@ -145,6 +157,7 @@ function ItemPage() {
             next={getNext}
             previous={getPrevious}
             showSpinner={showSpinner}
+            delete={deleteItem}
           />
         </div>
       </div>
