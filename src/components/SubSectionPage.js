@@ -24,7 +24,7 @@ export default function SubSectionPage() {
     deleteSubSectionById(id)
       .then(() => {
         let currentSubSections = subSections.filter((element) => {
-          return element.id !== Number(id);
+          return element.internalCode !== Number(id);
         });
         setSubSections(currentSubSections);
         setfilteredSubSections(currentSubSections);

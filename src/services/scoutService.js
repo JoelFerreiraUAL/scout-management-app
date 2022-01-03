@@ -85,6 +85,27 @@ export async function addSection(section) {
   }
   return result;
 }
+export async function addSubSection(subSection) {
+  const response = await fetch("http://localhost:8080/api/subsection/add", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(subSection),
+  });
+  const result = await response.json();
+  if (subSection.id) {
+    toast.success("Secao atualizada com sucesso !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  } else {
+    toast.success("Secao criada com sucesso !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
+  return result;
+}
 export async function getItem(id) {
   const response = await fetch(
     "http://localhost:8080/api/items/getById?id=" + id
@@ -113,8 +134,43 @@ export async function getSubSections(skip, take) {
   const result = await response.json();
   return result;
 }
+export async function getSubSection(id) {
+  const response = await fetch(
+    "http://localhost:8080/api/subsection/getById?id=" + id
+  );
+  const result = await response.json();
+  return result;
+}
+export async function addCategory(category) {
+  const response = await fetch("http://localhost:8080/api/itemCategory/add", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(category),
+  });
+  const result = await response.json();
+  if (category.id) {
+    toast.success("Categoria atualizada com sucesso !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  } else {
+    toast.success("Categoria criada com sucesso !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
+  return result;
+}
 export async function getItemCategories() {
   const response = await fetch("http://localhost:8080/api/itemCategory/getAll");
+  const result = await response.json();
+  return result;
+}
+export async function getCategoryById(id) {
+  const response = await fetch(
+    "http://localhost:8080/api/itemCategory/getById?id=" + id
+  );
   const result = await response.json();
   return result;
 }
@@ -127,6 +183,21 @@ export async function deleteSectionById(id) {
       pending: "Apagar Seção..",
       success: "Apagado com sucesso 👌",
       error: "Ocorreu um problema ao apagar a seção 🤯",
+    },
+    { autoClose: 5000 }
+  );
+  const result = await response.json();
+  return result;
+}
+export async function deleteCategoryById(id) {
+  const response = await toast.promise(
+    fetch("http://localhost:8080/api/itemCategory/deleteById?id=" + id, {
+      method: "POST",
+    }),
+    {
+      pending: "Apagar Categoria..",
+      success: "Apagado com sucesso 👌",
+      error: "Ocorreu um problema ao apagar a categoria 🤯",
     },
     { autoClose: 5000 }
   );

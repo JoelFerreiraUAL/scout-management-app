@@ -25,7 +25,7 @@ function ItemList(props) {
                 </td>
                 <td> {item.name} </td>
                 <td> {item.description} </td>
-                <td> {item.idSubsection.section.section} </td>
+                <td> {item.idSubsection?.section?.section} </td>
                 <td> {item.idSubsection.subSection} </td>
                 <td>
                   <button

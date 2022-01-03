@@ -10,6 +10,8 @@ import SubSectionPage from "./components/SubSectionPage";
 import ItemInspectionPage from "./components/ItemInspectionPage";
 import CategoryPage from "./components/CategoryPage";
 import CreateSection from "./components/CreateSection";
+import CreateSubSection from "./components/CreateSubSection";
+import CreateCategory from "./components/CreateCategory";
 function App() {
   return (
     <>
@@ -26,6 +28,13 @@ function App() {
           <Route path="/section/:id" element={<CreateSection />} />
 
           <Route path="/subsections" element={<SubSectionPage />}></Route>
+          <Route path="/subsection" element={<CreateSubSection />} />
+          <Route path="/subsection/:id" element={<CreateSubSection />} />
+
+          <Route path="/categories" element={<CategoryPage />}></Route>
+          <Route path="/category" element={<CreateCategory />} />
+          <Route path="/category/:id" element={<CreateCategory />} />
+
           <Route path="/inspection" element={<ItemInspectionPage />}></Route>
           <Route path="/category" element={<CategoryPage />}></Route>
         </Routes>

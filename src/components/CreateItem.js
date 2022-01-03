@@ -66,6 +66,14 @@ function CreateItem(props) {
     let _itemCategory = itemCategories.find((result) => {
       return result.id === Number(target.value);
     });
+    if (_itemCategory === undefined) {
+      _itemCategory = {
+        id: "",
+        category: "",
+      };
+    }
+    console.log(_itemCategory);
+
     const updateItem = { ...item, [target.name]: _itemCategory };
     setItem(updateItem);
   }
@@ -79,10 +87,28 @@ function CreateItem(props) {
     const slug = params.id;
     if (slug) {
       getItem(slug).then((result) => {
-        setItem(result);
+        let item = result;
+        if (result.idSubsection === null) {
+          item.idSubsection = {
+            id: null,
+            subSection: "",
+            internalCode: "",
+            section: {
+              id: null,
+              section: "",
+            },
+          };
+        }
+        if (result.idCategory === null) {
+          item.idCategory = {
+            id: "",
+            category: "",
+          };
+        }
+        setItem(item);
       });
     }
-    getSubSections().then((result) => {
+    getSubSections(1, 50).then((result) => {
       setSubSections(result);
     });
     getItemCategories().then((result) => {

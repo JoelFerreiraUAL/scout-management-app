@@ -10,7 +10,7 @@ function ItemPage() {
   const [items, setItems] = useState([]);
   const [_filteredItems, setFilteredItems] = useState([]);
   const [pageSize, setPageSize] = useState(1);
-  const [take, setTake] = useState(10);
+  const [take] = useState(10);
   const [showSpinner, setShowSpinner] = useState(false);
   function findItem(event) {
     const name = event.target.value;
@@ -36,7 +36,20 @@ function ItemPage() {
     let currentSize = pageSize + 1;
     setPageSize(currentSize);
     setShowSpinner(true);
-    getItems(currentSize, take).then((items) => {
+    getItems(currentSize, take).then((data) => {
+      const items = data.map((element) => {
+        if (element.idSubsection === null) {
+          element.idSubsection = {
+            id: null,
+            subSection: "",
+            section: {
+              id: null,
+              section: "",
+            },
+          };
+        }
+        return element;
+      });
       setItems(items);
       setFilteredItems(items);
       setShowSpinner(false);
@@ -51,7 +64,20 @@ function ItemPage() {
     setFilteredItems([]);
     setPageSize(currentSize);
     setShowSpinner(true);
-    getItems(currentSize, take).then((items) => {
+    getItems(currentSize, take).then((data) => {
+      const items = data.map((element) => {
+        if (element.idSubsection === null) {
+          element.idSubsection = {
+            id: null,
+            subSection: "",
+            section: {
+              id: null,
+              section: "",
+            },
+          };
+        }
+        return element;
+      });
       setItems(items);
       setFilteredItems(items);
       setShowSpinner(false);
@@ -102,7 +128,20 @@ function ItemPage() {
     reader.readAsBinaryString(f);
   }
   const getData = async () => {
-    const items = await getItems(pageSize, take);
+    let items = await getItems(pageSize, take);
+    items = items.map((element) => {
+      if (element.idSubsection === null) {
+        element.idSubsection = {
+          id: null,
+          subSection: "",
+          section: {
+            id: null,
+            section: "",
+          },
+        };
+      }
+      return element;
+    });
     setItems(items);
     setFilteredItems(items);
   };
