@@ -45,7 +45,7 @@ function NavBar() {
             <Link
               className="nav-link active"
               aria-current="page"
-              to="/Inspection"
+              to="/inspections"
             >
               Inspeções
             </Link>

@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { deleteItemById, getItems } from "../services/scoutService";
 import { Link } from "react-router-dom";
-import ItemList from "./ItemList";
+import InspectionList from "./InspectionList";
 
 export default function ItemInspectionPage() {
   const [itemsInspection, setitemsInspection] = useState([]);
@@ -35,7 +35,8 @@ export default function ItemInspectionPage() {
     setPageSize(currentSize);
     setShowSpinner(true);
     getItems(currentSize, take).then((data) => {
-      const items = data.map((element) => {
+      let inspections = [];
+      data.forEach((element) => {
         if (element.idSubsection === null) {
           element.idSubsection = {
             id: null,
@@ -46,10 +47,24 @@ export default function ItemInspectionPage() {
             },
           };
         }
-        return element;
+        if (element.inspections.length > 0) {
+          element.inspections.forEach((result) => {
+            let inspectionItem = {
+              id: result.id,
+              date: result.date,
+              description: result.description,
+              item: {
+                id: element.id,
+                idCode: element.idCode,
+              },
+            };
+            inspections.push(inspectionItem);
+          });
+        }
       });
-      setitemsInspection(items);
-      setFilteredItemsInspection(items);
+      console.log(inspections);
+      setitemsInspection(inspections);
+      setFilteredItemsInspection(inspections);
       setShowSpinner(false);
     });
   }
@@ -63,7 +78,8 @@ export default function ItemInspectionPage() {
     setPageSize(currentSize);
     setShowSpinner(true);
     getItems(currentSize, take).then((data) => {
-      const items = data.map((element) => {
+      let inspections = [];
+      data.forEach((element) => {
         if (element.idSubsection === null) {
           element.idSubsection = {
             id: null,
@@ -74,16 +90,31 @@ export default function ItemInspectionPage() {
             },
           };
         }
-        return element;
+        if (element.inspections.length > 0) {
+          element.inspections.forEach((result) => {
+            let inspectionItem = {
+              id: result.id,
+              date: result.date,
+              description: result.description,
+              item: {
+                id: element.id,
+                idCode: element.idCode,
+              },
+            };
+            inspections.push(inspectionItem);
+          });
+        }
       });
-      setitemsInspection(items);
-      setFilteredItemsInspection(items);
+      setitemsInspection(inspections);
+      setFilteredItemsInspection(inspections);
       setShowSpinner(false);
     });
   }
   const getData = async () => {
-    let items = await getItems(pageSize, take);
-    items = items.map((element) => {
+    setShowSpinner(true);
+    let data = await getItems(pageSize, take);
+    let inspections = [];
+    data.forEach((element) => {
       if (element.idSubsection === null) {
         element.idSubsection = {
           id: null,
@@ -94,10 +125,25 @@ export default function ItemInspectionPage() {
           },
         };
       }
-      return element;
+      if (element.inspections.length > 0) {
+        element.inspections.forEach((result) => {
+          let inspectionItem = {
+            id: result.id,
+            date: result.date,
+            description: result.description,
+            item: {
+              id: element.id,
+              idCode: element.idCode,
+            },
+          };
+          inspections.push(inspectionItem);
+        });
+      }
     });
-    setitemsInspection(items);
-    setFilteredItemsInspection(items);
+    console.log(inspections);
+    setitemsInspection(inspections);
+    setFilteredItemsInspection(inspections);
+    setShowSpinner(false);
   };
   useEffect(() => {
     setShowSpinner(true);
@@ -110,7 +156,7 @@ export default function ItemInspectionPage() {
     <>
       <div className="row">
         <div className="col">
-          <h1>Items</h1>
+          <h1>Inspecoes</h1>
         </div>
       </div>
       <div className="row">
@@ -132,12 +178,9 @@ export default function ItemInspectionPage() {
       </div>
       <div className="row">
         <div className="col mt-3">
-          <ItemList
-            itemInspections={_filteredItemsInspection}
-            next={getNext}
-            previous={getPrevious}
+          <InspectionList
+            inspections={itemsInspection}
             showSpinner={showSpinner}
-            delete={deleteInspection}
           />
         </div>
       </div>

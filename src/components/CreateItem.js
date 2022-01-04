@@ -12,6 +12,7 @@ import {
   addItem,
 } from "../services/scoutService";
 import { useParams } from "react-router-dom";
+import InspectionList from "./InspectionList";
 
 function CreateItem(props) {
   const params = useParams();
@@ -36,7 +37,7 @@ function CreateItem(props) {
         section: "",
       },
     },
-    itemInspection: [],
+    inspections: [],
   });
   const [subSections, setSubSections] = useState([]);
   const [itemCategories, setItemCategories] = useState([]);
@@ -118,11 +119,11 @@ function CreateItem(props) {
 
   return (
     <>
-      <h1>Dados Item</h1>
       <div className="mt-3">
         <form onSubmit={submitItem}>
           <div className="row">
             <div className="col-4">
+              <h1>Dados Item</h1>
               <div className="mb-3">
                 <label htmlFor="idCode" className="form-label">
                   Código
@@ -137,6 +138,7 @@ function CreateItem(props) {
                 ></input>
               </div>
             </div>
+            <div className="col"></div>
           </div>
           <div className="row">
             <div className="col-4">
@@ -261,9 +263,18 @@ function CreateItem(props) {
               <button type="submit" className="btn btn-primary ms-3">
                 Submeter
               </button>
+              {/* <button type="button" className="btn btn-primary ms-3 ">
+                Adicionar Inspecao
+              </button> */}
             </div>
             <div className="col-3"></div>
           </div>
+          {/* <div className="row mt-2">
+            <h1>Inspecoes</h1>
+            <div className="col-4">
+              <InspectionList inspections={item.inspections} />
+            </div>
+          </div> */}
         </form>
       </div>
     </>

@@ -12,6 +12,7 @@ import CategoryPage from "./components/CategoryPage";
 import CreateSection from "./components/CreateSection";
 import CreateSubSection from "./components/CreateSubSection";
 import CreateCategory from "./components/CreateCategory";
+import CreateItemInspection from "./components/CreateItemInspection";
 function App() {
   return (
     <>
@@ -35,7 +36,9 @@ function App() {
           <Route path="/category" element={<CreateCategory />} />
           <Route path="/category/:id" element={<CreateCategory />} />
 
-          <Route path="/inspection" element={<ItemInspectionPage />}></Route>
+          <Route path="/inspections" element={<ItemInspectionPage />}></Route>
+          <Route path="/inspection" element={<CreateItemInspection />} />
+          <Route path="/inspection/:id" element={<CreateItemInspection />} />
           <Route path="/category" element={<CategoryPage />}></Route>
         </Routes>
       </div>

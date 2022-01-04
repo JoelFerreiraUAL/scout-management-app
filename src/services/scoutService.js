@@ -127,6 +127,13 @@ export async function getSection(id) {
   const result = await response.json();
   return result;
 }
+export async function getItemInspection(id) {
+  const response = await fetch(
+    "http://localhost:8080/api/itemInspection/getById?id=" + id
+  );
+  const result = await response.json();
+  return result;
+}
 export async function getSubSections(skip, take) {
   const response = await fetch(
     "http://localhost:8080/api/subsection/getAll?skip=" + skip + "&take=" + take
