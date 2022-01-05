@@ -1,6 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { deleteItemById, getItems } from "../services/scoutService";
+import {
+  deleteInspectionById,
+  deleteItemById,
+  getItems,
+} from "../services/scoutService";
 import { Link } from "react-router-dom";
 import InspectionList from "./InspectionList";
 
@@ -20,7 +24,7 @@ export default function ItemInspectionPage() {
   }
   function deleteInspection(event) {
     let id = event.target.value;
-    deleteItemById(id).then(() => {
+    deleteInspectionById(id).then(() => {
       let currentInspection = itemsInspection.filter((element) => {
         return element.id !== Number(id);
       });
@@ -161,7 +165,7 @@ export default function ItemInspectionPage() {
       </div>
       <div className="row">
         <div className="col">
-          <Link className="btn btn-primary" to="/item">
+          <Link className="btn btn-primary" to="/inspection">
             Criar Inspecao
           </Link>
         </div>
@@ -170,7 +174,7 @@ export default function ItemInspectionPage() {
         <div className="col-5 mt-3">
           <input
             onChange={findInspection}
-            placeholder="procurar item"
+            placeholder="procurar inspeção por descrição"
             type="text"
             className="form-control"
           ></input>
@@ -179,8 +183,9 @@ export default function ItemInspectionPage() {
       <div className="row">
         <div className="col mt-3">
           <InspectionList
-            inspections={itemsInspection}
+            inspections={_filteredItemsInspection}
             showSpinner={showSpinner}
+            delete={deleteInspection}
           />
         </div>
       </div>

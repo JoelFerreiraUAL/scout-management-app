@@ -169,6 +169,42 @@ export async function addCategory(category) {
   }
   return result;
 }
+export async function addInspection(inspection) {
+  const response = await fetch("http://localhost:8080/api/itemInspection/add", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(inspection),
+  });
+  const result = await response.json();
+  if (inspection.id) {
+    toast.success("Inspeção atualizada com sucesso !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  } else {
+    toast.success("Inspeção Criado com sucesso !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
+  return result;
+}
+export async function deleteInspectionById(id) {
+  const response = await toast.promise(
+    fetch("http://localhost:8080/api/itemInspection/deleteById?id=" + id, {
+      method: "POST",
+    }),
+    {
+      pending: "Apagar o item",
+      success: "Apagado com sucesso 👌",
+      error: "Ocorreu um problema ao apagar o item 🤯",
+    },
+    { autoClose: 5000 }
+  );
+  const result = await response.json();
+  return result;
+}
 export async function getItemCategories() {
   const response = await fetch("http://localhost:8080/api/itemCategory/getAll");
   const result = await response.json();

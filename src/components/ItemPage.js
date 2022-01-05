@@ -1,6 +1,11 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { addItems, deleteItemById, getItems } from "../services/scoutService";
+import {
+  addItems,
+  deleteItemById,
+  getItems,
+  getSections,
+} from "../services/scoutService";
 import { Link } from "react-router-dom";
 import ItemList from "./ItemList";
 import Spinner from "./Spinner";
@@ -12,6 +17,16 @@ function ItemPage() {
   const [pageSize, setPageSize] = useState(1);
   const [take] = useState(10);
   const [showSpinner, setShowSpinner] = useState(false);
+  const [subSection, setSubSection] = useState({
+    id: null,
+    subSection: "",
+    internalCode: "",
+    section: {
+      id: "",
+      section: "",
+    },
+  });
+  const [sections, setSections] = useState([]);
   function findItem(event) {
     const name = event.target.value;
     let filteredItems = [...items];
@@ -20,6 +35,15 @@ function ItemPage() {
     );
     setFilteredItems(filteredItems);
   }
+  function handleSectionDropdownChange({ target }) {
+    let _section = sections.find((result) => {
+      return result.id === Number(target.value);
+    });
+    const updateSubSection = { ...subSection, [target.name]: _section };
+    console.log(updateSubSection);
+    setSubSection(updateSubSection);
+  }
+
   function deleteItem(event) {
     let id = event.target.value;
     deleteItemById(id).then(() => {
@@ -150,6 +174,9 @@ function ItemPage() {
     getData().then(() => {
       setShowSpinner(false);
     });
+    getSections(1, 20).then((allSections) => {
+      setSections(allSections);
+    });
   }, []);
 
   return (
@@ -167,7 +194,7 @@ function ItemPage() {
         </div>
       </div>
       <div className="row">
-        <div className="col-5 mt-3">
+        <div className="col-3 mt-3">
           <input
             onChange={findItem}
             placeholder="procurar item"
@@ -175,7 +202,27 @@ function ItemPage() {
             className="form-control"
           ></input>
         </div>
-        <div className="col-3 mt-3 offset-md-4  ">
+        <div className="col-3 mt-3">
+          <select
+            className="form-select"
+            aria-label="Default select example"
+            name="section"
+            placeholder="seção"
+            value={subSection.section.id}
+            onChange={handleSectionDropdownChange}
+          >
+            <option value={""}></option>
+            {sections.map((element) => {
+              return (
+                <option key={element.id} value={element.id}>
+                  {element.section}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+
+        <div className="col-3 mt-3  ">
           <label htmlFor="inputFile" className="btn btn-primary">
             Importar Items
           </label>

@@ -5,6 +5,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import {
+  addInspection,
   addSection,
   getItem,
   getItemInspection,
@@ -49,20 +50,18 @@ export default function CreateItemInspection(props) {
     const updateInspection = { ...inspection, [target.name]: target.value };
     setInspection(updateInspection);
   }
-  async function submitSection(event) {
+  async function submitItemInspection(event) {
     event.preventDefault();
     let newInspection = {
       id: inspection.id,
       date: inspection.date,
       description: inspection.description,
       item: item,
+      itemId: item.id,
     };
     newInspection.item.inspections = [];
-    console.log(newInspection);
-
-    // console.log(section);
-    // await addSection(section);
-    // navigation("/sections");
+    await addInspection(newInspection);
+    navigation("/inspections");
   }
   function handlePurchasedAtChange(date) {
     const updateDate = { ...inspection, date: date };
@@ -121,7 +120,7 @@ export default function CreateItemInspection(props) {
     <>
       <h1>Dados Inspecao</h1>
       <div className="mt-3">
-        <form onSubmit={submitSection}>
+        <form onSubmit={submitItemInspection}>
           <div className="row">
             <div className="col-4">
               <div className="mb-3">
@@ -170,7 +169,7 @@ export default function CreateItemInspection(props) {
                   {items.map((element) => {
                     return (
                       <option key={element.id} value={element.id}>
-                        {element.idCode}
+                        {element.idCode} {element.name}
                       </option>
                     );
                   })}
