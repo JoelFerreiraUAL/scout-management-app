@@ -12,7 +12,7 @@ export default function CreateSubSection(props) {
   const params = useParams();
   const navigation = useNavigate();
   const [subSection, setSubSection] = useState({
-    id: null,
+    id: "",
     subSection: "",
     internalCode: "",
     section: {
@@ -44,6 +44,12 @@ export default function CreateSubSection(props) {
     if (slug) {
       getSubSection(slug)
         .then((result) => {
+          if (result.section === null) {
+            result.section = {
+              id: "",
+              section: "",
+            };
+          }
           setSubSection(result);
         })
         .catch((err) => {
@@ -51,6 +57,15 @@ export default function CreateSubSection(props) {
         });
     }
     getSections(1, 1000).then((allSections) => {
+      allSections = allSections.map((element) => {
+        if (element.section === null) {
+          element.section = {
+            id: "",
+            section: "",
+          };
+        }
+        return element;
+      });
       setSections(allSections);
     });
   }, [params]);

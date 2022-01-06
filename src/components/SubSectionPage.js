@@ -15,6 +15,15 @@ export default function SubSectionPage() {
 
   const getData = async () => {
     let allSubSections = await getSubSections(pageSize, take);
+    allSubSections = allSubSections.map((element) => {
+      if (element.section === null) {
+        element.section = {
+          id: "",
+          section: "",
+        };
+      }
+      return element;
+    });
     setSubSections(allSubSections);
     setfilteredSubSections(allSubSections);
   };
@@ -40,6 +49,15 @@ export default function SubSectionPage() {
     setPageSize(currentSize);
     setShowSpinner(true);
     getSubSections(currentSize, take).then((sections) => {
+      sections = sections.map((element) => {
+        if (element.section === null) {
+          element.section = {
+            id: "",
+            section: "",
+          };
+        }
+        return element;
+      });
       setSubSections(sections);
       setfilteredSubSections(sections);
       setShowSpinner(false);
@@ -55,6 +73,15 @@ export default function SubSectionPage() {
     setPageSize(currentSize);
     setShowSpinner(true);
     getSubSections(currentSize, take).then((sections) => {
+      sections = sections.map((element) => {
+        if (element.section === null) {
+          element.section = {
+            id: "",
+            section: "",
+          };
+        }
+        return element;
+      });
       setSubSections(sections);
       setfilteredSubSections(sections);
       setShowSpinner(false);

@@ -170,6 +170,12 @@ function ItemPage() {
             },
           };
         }
+        if (element.idSubsection.section === null) {
+          element.section = {
+            id: "",
+            section: "",
+          };
+        }
         return element;
       });
       setItems(items);
@@ -216,6 +222,13 @@ function ItemPage() {
             },
           };
         }
+        if (element.idSubsection.section === null) {
+          element.section = {
+            id: "",
+            section: "",
+          };
+        }
+
         return element;
       });
       setItems(items);
@@ -280,6 +293,12 @@ function ItemPage() {
           },
         };
       }
+      if (element.idSubsection.section === null) {
+        element.section = {
+          id: "",
+          section: "",
+        };
+      }
       return element;
     });
     setItems(items);
@@ -294,6 +313,16 @@ function ItemPage() {
       setSections(allSections);
     });
     getSubSections(1, 50).then((result) => {
+      result = result.map((element) => {
+        if (element.section === null) {
+          element.section = {
+            id: "",
+            section: "",
+          };
+        }
+        return element;
+      });
+
       setSubSections(result);
     });
     getItemCategories().then((result) => {
