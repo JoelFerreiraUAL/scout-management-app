@@ -12,7 +12,7 @@ export default function ItemInspectionPage() {
   const [itemsInspection, setitemsInspection] = useState([]);
   const [_filteredItemsInspection, setFilteredItemsInspection] = useState([]);
   const [pageSize, setPageSize] = useState(1);
-  const [take] = useState(10);
+  const [take] = useState(999);
   const [showSpinner, setShowSpinner] = useState(false);
   function findInspection(event) {
     const name = event.target.value;

@@ -3,6 +3,12 @@ export async function getItems(skip, take) {
   const response = await fetch(
     "http://localhost:8080/api/items/getAll?skip=" + skip + "&take=" + take
   );
+  if (!response.ok) {
+    toast.error("Ocorreu ao obter os itens", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    return;
+  }
   const result = await response.json();
   return result;
 }
@@ -73,6 +79,13 @@ export async function addSection(section) {
     },
     body: JSON.stringify(section),
   });
+  console.log(response);
+  if (!response.ok) {
+    toast.error("Ocorreu um erro ao criar a secao ", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    return;
+  }
   const result = await response.json();
   if (section.id) {
     toast.success("Secao atualizada com sucesso !", {
