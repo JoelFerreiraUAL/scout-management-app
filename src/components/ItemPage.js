@@ -78,6 +78,9 @@ function ItemPage() {
         }
       });
       setFilteredItems(foundItems);
+    } else {
+      let filteredItems = [...items];
+      setFilteredItems(filteredItems);
     }
   }
   function handleSectionDropdownChange({ target }) {

@@ -42,7 +42,7 @@ export default function CreateCategory(props) {
 
   return (
     <>
-      <h1>Dados Secao</h1>
+      <h1>Dados Categoria</h1>
       <div className="mt-3">
         <form onSubmit={submitCategory}>
           <div className="row">

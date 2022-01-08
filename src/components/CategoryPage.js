@@ -23,7 +23,7 @@ export default function CategoryPage() {
     const name = event.target.value;
     let _itemCategories = [...itemCategories];
     _itemCategories = _itemCategories.filter((item) =>
-      item.name.toLowerCase().includes(name.toLowerCase())
+      item.category.toLowerCase().includes(name.toLowerCase())
     );
     setfilteredCategories(_itemCategories);
   }

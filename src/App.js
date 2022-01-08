@@ -19,7 +19,7 @@ function App() {
       <NavBar />
       <div className="container-fluid  pt-2">
         <Routes>
-          <Route exact path="/" element={<HomePage />}></Route>
+          <Route exact path="/" element={<ItemPage />}></Route>
           <Route path="/items" element={<ItemPage />}></Route>
           <Route path="/item" element={<CreateItem />} />
           <Route path="/item/:id" element={<CreateItem />} />

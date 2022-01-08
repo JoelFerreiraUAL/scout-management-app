@@ -119,7 +119,7 @@ export default function CreateSubSection(props) {
           </div>
           <div className="row">
             <div className="col-3">
-              <Link to="/sections" className="btn btn-danger">
+              <Link to="/subsections" className="btn btn-danger">
                 Cancelar
               </Link>
               <button type="submit" className="btn btn-primary ms-3">
